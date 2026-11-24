@@ -1,0 +1,14 @@
+node_modules/
+dist/
+dist-ssr/
+.wrangler/
+.env
+.env.*
+.dev.vars
+*.log
+.DS_Store
+screenshots/
+test-results/
+playwright-report/
+.ship-denylist
+.claude/hook-events.jsonl

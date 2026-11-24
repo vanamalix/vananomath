@@ -1,0 +1,249 @@
+{
+  "schemaVersion": 1,
+  "app": "math",
+  "docs": "docs/governance",
+  "privacy": {
+    "patterns": ".privacy-patterns",
+    "allow": ".privacy-allow",
+    "denylist": ".ship-denylist",
+    "denylistRequired": true
+  },
+  "runtimeData": [
+    ".dev.vars",
+    ".ship-denylist",
+    ".wrangler/",
+    ".claude/hook-events.jsonl"
+  ],
+  "rollout": {
+    "mode": "preview-then-production",
+    "preview": "the vananomad-math-preview Worker (workers.dev only, no routes; wrangler.preview.jsonc)"
+  },
+  "gates": [
+    {
+      "name": "privacy",
+      "description": "privacy and secret scan of every tracked file (the repo is public)",
+      "quick": true,
+      "always": true,
+      "run": "node_modules/.bin/vn-privacy-scan --tracked"
+    },
+    {
+      "name": "shell",
+      "description": "shell scripts parse",
+      "quick": true,
+      "builtin": "shell_syntax",
+      "paths": [
+        "**/*.sh",
+        ".githooks/**"
+      ]
+    },
+    {
+      "name": "runtime-data",
+      "description": "runtime data and the local denylist stay untracked and ignored",
+      "quick": true,
+      "builtin": "runtime_data_ignored"
+    },
+    {
+      "name": "check",
+      "description": "typecheck, build and prerender, JS budget and tests",
+      "quick": true,
+      "always": true,
+      "requires": {
+        "commands": [
+          "npm"
+        ]
+      },
+      "missing": "npm not installed",
+      "run": "npm run check"
+    },
+    {
+      "name": "e2e",
+      "description": "Playwright and axe against the built site",
+      "paths": [
+        "src/**",
+        "public/**",
+        "scripts/**",
+        "index.html",
+        "headers.config.ts",
+        "vite.config.ts",
+        "tests/e2e/**",
+        "playwright.config.ts"
+      ],
+      "requires": {
+        "commands": [
+          "npm"
+        ]
+      },
+      "missing": "npm not installed",
+      "run": "npm run test:e2e",
+      "quick": false
+    }
+  ],
+  "tiers": {
+    "default": "T2",
+    "levels": [
+      {
+        "id": "T0",
+        "title": "docs",
+        "paths": [
+          "**/*.md",
+          "docs/**"
+        ],
+        "gates": [
+          "privacy"
+        ],
+        "componentGates": false,
+        "testsFirst": false,
+        "review": "none",
+        "rollout": "none",
+        "approvals": []
+      },
+      {
+        "id": "T1",
+        "title": "UI, styling and page content",
+        "paths": [
+          "**/*.css",
+          "**/*.svg",
+          "public/**",
+          "src/components/**",
+          "src/pages/**"
+        ],
+        "gates": [
+          "privacy",
+          "runtime-data"
+        ],
+        "componentGates": true,
+        "testsFirst": false,
+        "review": "self",
+        "rollout": "none",
+        "approvals": [
+          "prod-deploy"
+        ]
+      },
+      {
+        "id": "T2",
+        "title": "logic, build, tooling",
+        "paths": [],
+        "gates": [
+          "privacy",
+          "runtime-data",
+          "e2e"
+        ],
+        "componentGates": true,
+        "testsFirst": true,
+        "review": "independent",
+        "rollout": "standard",
+        "approvals": [
+          "prod-deploy"
+        ]
+      },
+      {
+        "id": "T3",
+        "title": "headers, deploy config, dependencies, gates",
+        "paths": [
+          "**/wrangler*.jsonc",
+          "headers.config.ts",
+          "vite.config.ts",
+          "package.json",
+          ".npmrc",
+          ".github/**",
+          ".githooks/**",
+          ".claude/**",
+          "CLAUDE.md",
+          "governance.config.json",
+          ".privacy-patterns",
+          ".privacy-allow",
+          "**/_headers",
+          ".gitignore"
+        ],
+        "gates": [
+          "privacy",
+          "runtime-data",
+          "e2e"
+        ],
+        "componentGates": true,
+        "testsFirst": true,
+        "review": "independent",
+        "rollout": "standard",
+        "approvals": [
+          "prod-deploy",
+          "domain"
+        ]
+      }
+    ]
+  },
+  "safetyGates": [
+    "privacy",
+    "check"
+  ],
+  "compliance": {
+    "treeCheck": "block"
+  },
+  "commandGuard": {
+    "sweep": {},
+    "discard": {},
+    "push": {},
+    "gatePipes": {},
+    "noVerify": {},
+    "kill": {},
+    "retryLoop": {},
+    "pnpmRoot": {},
+    "treeStamp": {}
+  },
+  "review": {
+    "fromTier": "T3",
+    "trailers": [
+      "Reviewed-by:",
+      "Tier: T3 reviewed"
+    ],
+    "enforcement": "warn"
+  },
+  "approvals": [
+    {
+      "id": "prod-deploy",
+      "action": "production deploy (npx wrangler deploy) and the first deploy of the preview Worker",
+      "who": "owner"
+    },
+    {
+      "id": "domain",
+      "action": "custom domain, route or DNS record change",
+      "who": "owner"
+    },
+    {
+      "id": "secrets",
+      "action": "any secret, token or Actions secret (the site has none today)",
+      "who": "owner"
+    },
+    {
+      "id": "access",
+      "action": "Cloudflare Access or Zero Trust change",
+      "who": "owner"
+    },
+    {
+      "id": "package-publish",
+      "action": "publishing a package or pushing a release tag",
+      "who": "owner"
+    }
+  ],
+  "forbidden": [
+    "force-push to main",
+    "commit personal details, email addresses, tokens or internal hub notes (the repo is public)",
+    "add analytics, cookies, trackers or third-party scripts",
+    "turn on workers_dev or preview_urls in wrangler.jsonc",
+    "write into the hub or another app's repo"
+  ],
+  "sensitive": {
+    "label": "local private files (this repo is public)",
+    "paths": [
+      ".ship-denylist",
+      ".dev.vars",
+      ".env",
+      ".env.*",
+      "**/*.pem",
+      "**/*.key"
+    ],
+    "fileTypes": [],
+    "allow": [],
+    "blockConnectors": [],
+    "blockForcePush": true
+  }
+}

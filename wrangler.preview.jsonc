@@ -1,0 +1,14 @@
+{
+  // Preview Worker for review before production: workers.dev only, no routes, no bindings.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vananomad-math-preview",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": { "enabled": false }
+}

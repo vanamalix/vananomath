@@ -1,0 +1,18 @@
+{
+  // math.vananomad.com: famous proofs explained step by step.
+  // Static-assets-only Worker: every page is prerendered HTML in dist/. No server code, no bindings,
+  // no storage, nothing collected. workers.dev and preview URLs stay off (CONTRACT §3).
+  // The custom domain below needs the owner's OK before the first deploy.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vananomad-math",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [{ "pattern": "math.vananomad.com", "custom_domain": true }],
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": { "enabled": false }
+}

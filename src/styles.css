@@ -1,0 +1,401 @@
+/* vananomath. Builds on @vanamalix/ui/styles.css tokens: app colours use the --vm- prefix. */
+:root {
+  --vm-code-bg: #f7f3ea;
+  --vm-math: 'STIX Two Math', 'Cambria Math', 'Latin Modern Math', math, serif;
+  --vm-read: 44rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --vm-code-bg: #241f1a;
+  }
+}
+
+body {
+  background: var(--vn-bg);
+  color: var(--vn-ink);
+  font-family: var(--vn-font-body);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--vn-accent-ink);
+  text-underline-offset: 3px;
+}
+a:focus-visible,
+summary:focus-visible,
+button:focus-visible,
+main:focus-visible {
+  outline: 2px solid var(--vn-focus);
+  outline-offset: 2px;
+}
+main:focus {
+  outline: none;
+}
+
+/* header */
+.vn-header .vn-logo {
+  min-height: 44px;
+}
+.brand-math {
+  color: var(--vn-accent-ink);
+}
+.vn-header__inner {
+  flex-wrap: wrap;
+  padding-block: 8px;
+}
+.vn-nav {
+  flex-wrap: wrap;
+}
+.vn-nav a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--vn-ink);
+}
+.vn-nav a[aria-current='page'] {
+  background: var(--vn-accent-soft);
+  color: var(--vn-accent-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+/* page head */
+.page-head {
+  padding-block: clamp(32px, 6vw, 64px) 24px;
+  border-bottom: 1px solid var(--vn-line);
+  margin-bottom: 32px;
+}
+.page-head h1 {
+  font-family: var(--vn-font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px;
+  max-width: 22ch;
+}
+.home-head h1 {
+  max-width: 18ch;
+}
+.kicker {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--vn-muted);
+  margin: 0 0 8px;
+}
+.lede {
+  font-size: 1.15rem;
+  max-width: var(--vm-read);
+  margin: 0;
+  color: var(--vn-ink);
+}
+
+/* reading column */
+.prose > * {
+  max-width: var(--vm-read);
+}
+.prose h2 {
+  font-family: var(--vn-font-display);
+  font-size: 1.6rem;
+  line-height: 1.2;
+  margin: 48px 0 12px;
+  scroll-margin-top: 16px;
+}
+.prose h3 {
+  font-size: 1.15rem;
+  margin: 0 0 8px;
+}
+.prose li + li {
+  margin-top: 4px;
+}
+.note,
+.small {
+  color: var(--vn-muted);
+  font-size: 0.95rem;
+}
+.prose code,
+td code {
+  font-family: var(--vn-font-mono);
+  font-size: 0.88em;
+  background: var(--vm-code-bg);
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
+  overflow-wrap: anywhere;
+}
+
+/* maths */
+math {
+  font-family: var(--vm-math);
+  font-size: 1.1em;
+}
+.math-display {
+  overflow-x: auto;
+  padding: 8px 0;
+  margin: 12px 0;
+}
+.math-display math {
+  font-size: 1.25em;
+}
+
+/* status box */
+.status {
+  background: var(--vn-surface);
+  border: var(--vn-border);
+  border-radius: var(--vn-radius);
+  box-shadow: var(--vn-shadow);
+  padding: 20px 24px;
+  margin-bottom: 32px;
+}
+.status h2 {
+  margin-top: 0;
+  font-size: 1.25rem;
+}
+.status dl {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 10px 16px;
+  margin: 0 0 12px;
+}
+.status dt {
+  font-weight: 700;
+}
+.status dd {
+  margin: 0;
+}
+@media (max-width: 560px) {
+  .status dl {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .status dd {
+    margin-bottom: 10px;
+  }
+}
+
+.toc {
+  border-left: 3px solid var(--vn-accent);
+  padding: 4px 0 4px 16px;
+  margin-bottom: 8px;
+}
+.toc h2 {
+  font-size: 1rem;
+  margin: 0 0 4px;
+}
+.toc ol {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+/* steps */
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0;
+}
+.step {
+  position: relative;
+  padding: 0 0 24px 52px;
+  border-left: 2px solid var(--vn-line);
+  margin-left: 16px;
+}
+.step:last-child {
+  border-left-color: transparent;
+}
+.step h3 {
+  display: flex;
+  align-items: center;
+  min-height: 34px;
+}
+.step-n {
+  position: absolute;
+  left: -18px;
+  top: 0;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: var(--vn-border);
+  border-radius: 50%;
+  background: var(--vn-accent-soft);
+  color: var(--vn-accent-ink);
+  font-weight: 800;
+}
+.step-body > :first-child {
+  margin-top: 0;
+}
+
+/* Lean code */
+.code {
+  margin: 16px 0;
+  max-width: var(--vm-read);
+}
+.code pre {
+  background: var(--vm-code-bg);
+  border: 1px solid var(--vn-line);
+  border-radius: var(--vn-radius-sm);
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-family: var(--vn-font-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0;
+}
+.math-display:focus-visible,
+.code pre:focus-visible {
+  outline: 2px solid var(--vn-focus);
+}
+.code figcaption {
+  font-size: 0.85rem;
+  color: var(--vn-muted);
+  margin-top: 6px;
+}
+
+/* tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 16px 0;
+  font-size: 0.95rem;
+}
+caption {
+  text-align: left;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--vn-line);
+}
+th {
+  border-bottom: 2px solid var(--vn-edge);
+}
+
+/* home list */
+.proof-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 20px;
+}
+.proof-card {
+  background: var(--vn-surface);
+  border: var(--vn-border);
+  border-radius: var(--vn-radius);
+  box-shadow: var(--vn-shadow);
+  padding: 20px;
+  position: relative;
+  transition: box-shadow 140ms ease, transform 140ms ease;
+}
+.proof-card:hover,
+.proof-card:focus-within {
+  box-shadow: var(--vn-shadow-hover);
+  transform: translate(-1px, -1px);
+}
+.proof-card--feature {
+  grid-column: 1 / -1;
+}
+.proof-card h2 {
+  font-family: var(--vn-font-display);
+  font-size: 1.35rem;
+  line-height: 1.2;
+  margin: 0 0 8px;
+}
+.proof-card--feature h2 {
+  font-size: 1.8rem;
+}
+.proof-card h2 a {
+  color: var(--vn-ink);
+  text-decoration: none;
+}
+.proof-card h2 a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+.proof-card h2 a:focus-visible {
+  outline: none;
+}
+.proof-card:focus-within {
+  outline: 2px solid var(--vn-focus);
+  outline-offset: 3px;
+}
+.proof-card p {
+  margin: 0 0 8px;
+}
+.meta,
+.status-line {
+  font-size: 0.9rem;
+  color: var(--vn-muted);
+}
+.tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 1px 8px;
+  border: 1px solid var(--vn-edge);
+  border-radius: 999px;
+  color: var(--vn-ink);
+  margin-right: 4px;
+}
+.proof-card--feature .tag {
+  background: var(--vn-accent-soft);
+  color: var(--vn-accent-ink);
+}
+.aside-link {
+  margin-top: 32px;
+}
+
+/* reading list */
+.refs {
+  list-style: none;
+  padding: 0;
+}
+.refs li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--vn-line);
+  display: grid;
+  gap: 2px;
+}
+.refs li + li {
+  margin-top: 0;
+}
+.refs a {
+  font-weight: 600;
+}
+.ref-who {
+  font-size: 0.9rem;
+  color: var(--vn-muted);
+}
+.ref-note {
+  font-size: 0.95rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proof-card {
+    transition: none;
+  }
+  .proof-card:hover,
+  .proof-card:focus-within {
+    transform: none;
+  }
+}
+
+/* Long Mathlib names and URLs must wrap on a phone, or the whole page widens and zooms out. */
+.proof-card,
+.prose a,
+.prose li,
+.refs li,
+td {
+  overflow-wrap: anywhere;
+}
+.proof-list > li {
+  min-width: 0;
+}
