@@ -88,4 +88,4 @@ change that moves a path to a lower tier states why in the commit message and is
 
 - The globs in `governance.config.json` are the source of truth. T3 covers the deploy config (`**/wrangler*.jsonc`, both Workers), the response headers (`headers.config.ts`, `**/_headers`), `vite.config.ts`, `package.json` and `.npmrc`, `.gitignore`, CI, hooks, Claude settings, `CLAUDE.md` and the governance files.
 - Page content (`src/pages/**`, `src/components/**`) is T1 for the gates, but a factual change must still meet the content rules in DONE.md "App rules". `src/site.ts` (the proof list), `src/tex.tsx` and `scripts/prerender.mjs` fall to the default, T2.
-- Tier a change with `npx vn-tier --files <paths>`. "Rollout" here means `npm run check` and `npm run test:e2e`, the preview Worker, then an owner-approved production deploy (RELEASE.md).
+- Tier a change with `pnpm exec vn-tier --files <paths>`. "Rollout" here means `pnpm run check` and `pnpm run test:e2e`, the preview Worker, then an owner-approved production deploy (RELEASE.md).

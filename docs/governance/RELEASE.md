@@ -74,8 +74,8 @@ Steps 1-3 and 5-7 are the same in every mode; step 4 depends on it.
 
 This is a static site with no staging, no data and no cron triggers (rollout mode `preview-then-production`).
 
-- Before any deploy or push: `npm run check` and `npm run test:e2e` at exit 0, and `npx vn-privacy-scan --tracked` at exit 0 (the repo is public).
-- **Preview** (owner OK): `npm run build && npx wrangler deploy -c wrangler.preview.jsonc`. Worker `vananomad-math-preview`, workers.dev only, no routes.
-- **Production** (owner OK, each time): `npm run build && npx wrangler deploy`. Worker `vananomad-math`. The first deploy also attaches the custom domain `math.vananomad.com` (owner OK for the domain too).
+- Before any deploy or push: `pnpm run check` and `pnpm run test:e2e` at exit 0, and `pnpm exec vn-privacy-scan --tracked` at exit 0 (the repo is public).
+- **Preview** (owner OK): `pnpm run build && pnpm exec wrangler deploy -c wrangler.preview.jsonc`. Worker `vananomad-math-preview`, workers.dev only, no routes.
+- **Production** (owner OK, each time): `pnpm run build && pnpm exec wrangler deploy`. Worker `vananomad-math`. The first deploy also attaches the custom domain `math.vananomad.com` (owner OK for the domain too).
 - Smoke checks, preview and production: every page in the page list returns **200** (there is no identity gate, so no 302 is expected), an unknown path returns **404** with the site's 404 page, and the response carries the `Content-Security-Policy` from `dist/_headers`.
-- Rollback: `npx wrangler rollback` to the recorded version, or redeploy the previous good commit. There is no data to migrate or restore.
+- Rollback: `pnpm exec wrangler rollback` to the recorded version, or redeploy the previous good commit. There is no data to migrate or restore.

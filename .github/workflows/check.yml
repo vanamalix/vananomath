@@ -1,7 +1,7 @@
 # Governance gates on every push and pull request (@vanamalix/governance). Never deploys.
 # The exit code of vn-compliance is the verdict.
-# Adapted from the package template for npm (this repo has no pnpm; never run pnpm here, the folder
-# sits inside the hub's pnpm workspace). The @vanamalix packages are private on GitHub Packages, so
+# Adapted from the package template. The repo's own pnpm-workspace.yaml (packages: [.]) keeps pnpm from walking
+# up to the hub workspace. The @vanamalix packages are private on GitHub Packages, so
 # GITHUB_TOKEN can read them only after the owner grants this repo Actions read access on each package
 # (docs/governance/DECISIONS_PENDING.md).
 name: check
@@ -27,26 +27,29 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0   # vn-tier compares a pull request with its base branch
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.18.0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          cache: pnpm
           registry-url: https://npm.pkg.github.com
           scope: '@vanamalix'
-      - run: npm ci
+      - run: pnpm install --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Governance config is valid
-        run: npx vn-tier --check-config
+        run: pnpm exec vn-tier --check-config
       - name: Risk tier of this pull request (information only)
         if: github.event_name == 'pull_request'
         env:
           BASE_REF: ${{ github.base_ref }}
-        run: npx vn-tier --range "origin/${BASE_REF}...HEAD"
+        run: pnpm exec vn-tier --range "origin/${BASE_REF}...HEAD"
       - name: Gates
         env:
           COMPLIANCE_LOGDIR: ${{ runner.temp }}/compliance
-        run: npx vn-compliance --quick
+        run: pnpm exec vn-compliance --quick
       - name: Upload gate logs
         if: failure()
         uses: actions/upload-artifact@v4

@@ -35,4 +35,4 @@ Content is the product, so a page change is done only when:
 - The page says plainly whether a result is machine-checked (Lean/Mathlib), peer-reviewed, both, or neither. Machine-checked is not the same as peer-reviewed.
 - Every Mathlib declaration name and every URL cited has been checked to exist, today, not taken from memory.
 - New Zealand English throughout.
-- `npx vn-privacy-scan --tracked` exits 0 before any push (the repo is public).
+- `pnpm exec vn-privacy-scan --tracked` exits 0 before any push (the repo is public).

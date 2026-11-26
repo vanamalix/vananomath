@@ -31,7 +31,7 @@ Decided table row: `| <date> | <decision in one line> | <record: ADR or doc path
 
 ### P-3 — CI read access to the private @vanamalix packages
 - Raised: 2026-11-24, by the setup session
-- Why it matters: `.github/workflows/check.yml` installs with `npm ci` and `GITHUB_TOKEN` (`packages: read`). That works only after the owner grants `vanamalix/vananomath` Actions read access on each package it installs (ui, edge, config, testing, governance). Otherwise CI fails at install.
+- Why it matters: `.github/workflows/check.yml` installs with `pnpm install --frozen-lockfile` and `GITHUB_TOKEN` (`packages: read`). That works only after the owner grants `vanamalix/vananomath` Actions read access on each package it installs (ui, edge, config, testing, governance). Otherwise CI fails at install.
 - Options: A grant per-package Actions access / B a read-only `read:packages` token as an Actions secret (a secret: owner OK) / C drop the workflow until one of those is done (thefreemockmmi and albe have no CI)
 - Interim behaviour shipped: the workflow is in the repo and will fail at install until A or B
 - Blocks: green CI
