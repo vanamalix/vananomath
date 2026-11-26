@@ -49,11 +49,11 @@
       "always": true,
       "requires": {
         "commands": [
-          "npm"
+          "pnpm"
         ]
       },
-      "missing": "npm not installed",
-      "run": "npm run check"
+      "missing": "pnpm not installed",
+      "run": "pnpm run check"
     },
     {
       "name": "e2e",
@@ -70,11 +70,11 @@
       ],
       "requires": {
         "commands": [
-          "npm"
+          "pnpm"
         ]
       },
-      "missing": "npm not installed",
-      "run": "npm run test:e2e",
+      "missing": "pnpm not installed",
+      "run": "pnpm run test:e2e",
       "quick": false
     }
   ],
@@ -200,7 +200,7 @@
   "approvals": [
     {
       "id": "prod-deploy",
-      "action": "production deploy (npx wrangler deploy) and the first deploy of the preview Worker",
+      "action": "production deploy (pnpm exec wrangler deploy) and the first deploy of the preview Worker",
       "who": "owner"
     },
     {

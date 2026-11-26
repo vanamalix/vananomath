@@ -52,10 +52,10 @@ You need Node 20 or newer and read access to the `@vanamalix` packages on GitHub
 in your own `~/.npmrc`, never in the repo).
 
 ```sh
-npm ci
-npm run dev        # build, then serve dist/ with wrangler on http://localhost:8798
-npm run check      # typecheck, build, JS budget and unit tests
-npm run test:e2e   # Playwright and axe at 390px and 1280px, screenshots in screenshots/
+pnpm install --frozen-lockfile
+pnpm run dev        # build, then serve dist/ with wrangler on http://localhost:8798
+pnpm run check      # typecheck, build, JS budget and unit tests
+pnpm run test:e2e   # Playwright and axe at 390px and 1280px, screenshots in screenshots/
 ```
 
 ## Adding a proof
@@ -70,8 +70,8 @@ that KaTeX can't parse, which is a feature.
 Deploys only happen with the owner's OK. Preview first, on workers.dev with no routes.
 
 ```sh
-npm run check && npx wrangler deploy -c wrangler.preview.jsonc
-npm run check && npx wrangler deploy     # production, attaches math.vananomad.com
+pnpm run check && pnpm exec wrangler deploy -c wrangler.preview.jsonc
+pnpm run check && pnpm exec wrangler deploy     # production, attaches math.vananomad.com
 ```
 
 Governance (tiers, gates, privacy scan and hooks) is in `governance.config.json` and `docs/governance/`.

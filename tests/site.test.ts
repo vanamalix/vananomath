@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 
-// Runs against the built dist/ (npm run check builds before testing).
+// Runs against the built dist/ (pnpm run check builds before testing).
 const dist = path.resolve('dist');
 
 function htmlFiles(dir: string): string[] {

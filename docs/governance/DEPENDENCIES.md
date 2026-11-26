@@ -28,7 +28,7 @@ reviewable and reproducible.
 
 ## App rules
 
-**npm, not pnpm, overriding the shared pnpm rules above.** One static site, no workspace, and the folder sits inside the hub repo, so pnpm would walk up and act on the hub workspace (the `pnpmRoot` command-guard rule refuses it). `package-lock.json` is the lockfile and `npm ci` the install. `@vanamalix` packages use exact pins and come only from GitHub Packages (`.npmrc`), never the public npm registry. The lockfile names those private packages and versions, which is acceptable in the public repo; it holds no token.
+**pnpm, as above, with a one-package workspace.** One static site, and the folder sits inside the hub repo. The repo's own `pnpm-workspace.yaml` (`packages: [.]`) makes it the workspace root, so pnpm does not walk up and act on the hub workspace (the `pnpmRoot` command-guard rule refuses that): keep that file. `pnpm-lock.yaml` is the lockfile and `pnpm install --frozen-lockfile` the install. `@vanamalix` packages use exact pins and come only from GitHub Packages (`.npmrc`), never the public npm registry. The lockfile names those private packages and versions, which is acceptable in the public repo; it holds no token.
 
 | Package | Used here? | Where or why |
 | --- | --- | --- |
