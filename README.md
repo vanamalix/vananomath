@@ -1,11 +1,12 @@
 # vananomath
 
-Famous proofs, one step at a time. Served at **[math.vananomad.com](https://math.vananomad.com)**.
+Proofs made with AI, one step at a time. Served at **[math.vananomad.com](https://math.vananomad.com)**.
 
 The first proof on the list is the newest one. On 20 November 2026 Levent Alpöge announced a proof of the Riemann
 Hypothesis that he found working with Claude, written entirely in Lean. Seventeen million lines of it. Nobody can
 read that in a weekend, so this site tries to explain what it says, how it fits together and why people trust a
-proof that no human has read end to end. Then it does the same for some older favourites that fit on a napkin.
+proof that no human has read end to end. Then it does the same for Fermat's Last Theorem, which Wiles proved in
+1994 and an AI model wrote out in full Lean in 2026.
 
 If you like this sort of thing, the sister site **[albe](https://albe.vananomad.com)** lets you drop black holes on
 a sheet of spacetime and watch light bend around them.
@@ -16,13 +17,12 @@ a sheet of spacetime and watch light bend around them.
 | --- | --- |
 | [`/`](https://math.vananomad.com/) | The list of proofs |
 | [`/riemann-hypothesis`](https://math.vananomad.com/riemann-hypothesis) | The 2026 proof as a step by step map, how it was checked and the critique |
-| [`/infinitely-many-primes`](https://math.vananomad.com/infinitely-many-primes) | Euclid, still the first proof anyone should see |
-| [`/root-two-is-irrational`](https://math.vananomad.com/root-two-is-irrational) | The one that upset the Pythagoreans |
+| [`/fermats-last-theorem`](https://math.vananomad.com/fermats-last-theorem) | Wiles's proof as a map, and the 13 million lines of Lean an AI model wrote for it |
 | [`/lean`](https://math.vananomad.com/lean) | How to read a Lean statement without learning Lean |
 | [`/reading`](https://math.vananomad.com/reading) | Primary sources, from Riemann in 1859 to the Lean FRO in 2026 |
 | [`/about`](https://math.vananomad.com/about) | What the site is and how it is built |
 
-More proof pages live in `src/pages/more/` and add themselves to the list.
+Only proofs that AI helped find or check make the list.
 
 ## A note on honesty
 
@@ -60,9 +60,9 @@ npm run test:e2e   # Playwright and axe at 390px and 1280px, screenshots in scre
 
 ## Adding a proof
 
-Write a page in `src/pages/more/` using the components in `src/components/Shell.tsx` (`PageHead`, `Step`, `Lean`
-and `Ext`) and the maths helpers in `src/tex.tsx` (`M` inline, `MD` on its own line). Register it in
-`src/pages/more/index.ts`. Check every link and every Mathlib name before citing it. The build fails on any TeX
+It has to be a proof AI helped find or check. Write a page in `src/pages/` using the components in
+`src/components/Shell.tsx` (`PageHead`, `Step`, `Lean` and `Ext`) and the maths helpers in `src/tex.tsx` (`M` inline,
+`MD` on its own line). Add it to `PROOFS` in `src/site.ts` and to `ROUTES` in `src/routes.tsx`. Check every link and every Mathlib name before citing it. The build fails on any TeX
 that KaTeX can't parse, which is a feature.
 
 ## Deploying

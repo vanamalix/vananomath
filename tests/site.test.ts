@@ -22,8 +22,14 @@ const routes = new Set(
 
 describe('built site', () => {
   it('has the core pages and a 404', () => {
-    for (const p of ['/', '/riemann-hypothesis', '/infinitely-many-primes', '/root-two-is-irrational', '/lean', '/reading', '/about', '/404']) {
+    for (const p of ['/', '/riemann-hypothesis', '/fermats-last-theorem', '/lean', '/reading', '/about', '/404']) {
       expect(routes.has(p), p).toBe(true);
+    }
+  });
+
+  it('only lists proofs made or checked with AI (the classic pages are gone)', () => {
+    for (const p of ['/infinitely-many-primes', '/root-two-is-irrational', '/pythagoras', '/basel-problem', '/cantor-diagonal', '/halting-problem', '/four-colour-theorem']) {
+      expect(routes.has(p), p).toBe(false);
     }
   });
 

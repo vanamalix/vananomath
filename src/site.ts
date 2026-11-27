@@ -2,7 +2,7 @@ export const SITE = {
   name: 'vananomath',
   host: 'math.vananomad.com',
   origin: 'https://math.vananomad.com',
-  tagline: 'Famous proofs, one step at a time',
+  tagline: 'Proofs made with AI, one step at a time',
 };
 
 /** Sister site: curved spacetime you can play with. */
@@ -15,7 +15,7 @@ export const NAV = [
   { href: '/about', label: 'About' },
 ];
 
-export type Status = 'checked-2026' | 'classical';
+export type Status = 'checked-2026';
 
 export interface Proof {
   path: string;
@@ -40,21 +40,12 @@ export const PROOFS: Proof[] = [
     statusText: 'Machine-checked in Lean and certified by the Lean FRO and Mathlib Initiative. No human-readable write-up or peer review yet.',
   },
   {
-    path: '/infinitely-many-primes',
-    title: 'There are infinitely many primes',
-    claim: 'The list of prime numbers never ends.',
-    who: 'Euclid',
-    when: 'about 300 BCE',
-    status: 'classical',
-    statusText: 'Classical. Also in Mathlib as Nat.exists_infinite_primes.',
-  },
-  {
-    path: '/root-two-is-irrational',
-    title: 'The square root of 2 is irrational',
-    claim: 'No fraction of whole numbers squares to exactly 2.',
-    who: 'the Pythagorean school',
-    when: 'about 400 BCE',
-    status: 'classical',
-    statusText: 'Classical. Also in Mathlib as irrational_sqrt_two.',
+    path: '/fermats-last-theorem',
+    title: 'Fermat’s Last Theorem',
+    claim: 'For any power n bigger than 2, a to the n plus b to the n never equals c to the n in positive whole numbers.',
+    who: 'Andrew Wiles, with Richard Taylor; formalised in Lean by an Anthropic model',
+    when: 'proved 1994, formalised 4 September 2026',
+    status: 'checked-2026',
+    statusText: 'Peer reviewed since 1995. Fully formalised in Lean by an AI model in September 2026 and checked by Kevin Buzzard.',
   },
 ];
